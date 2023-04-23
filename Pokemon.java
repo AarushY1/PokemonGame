@@ -7,10 +7,8 @@ public class Pokemon
     private int currentHP;
     private int attack;
     private int defense;
-    private int SPattack;
-    private int SPdefense;
 
-    public Pokemon(String name, int level, String type, int maxHP, int currentHP, int attack, int defense, int SPattack, int Spdefense)
+    public Pokemon(String name, int level, String type, int maxHP, int currentHP, int attack, int defense)
     {
       this.name = name;
       this.level = level;
@@ -19,14 +17,12 @@ public class Pokemon
       this.currentHP = currentHP;
       this.attack = attack;
       this.defense = defense;
-      this.SPattack = SPattack;
-      this.SPdefense = SPdefense;
     }
     public static void main(String[] args)
     {
       
       
-    Pokemon x = new Pokemon("Pikachu", 5, "Electric", 35, 35, 5, 5, 5, 5);
+    Pokemon x = new Pokemon("Pikachu", 5, "Electric", 35, 35, 5, 5);
     
     String name = x.getName();
     System.out.println(name);
@@ -118,6 +114,7 @@ public class Pokemon
   }
   //HW
   /*
-   * 
+   * Add attributes
+   * getters and setters
    * 
    */
