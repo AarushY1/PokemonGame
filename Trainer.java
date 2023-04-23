@@ -1,13 +1,14 @@
 import java.util.*;
 public class Trainer 
 {
-    private String name;
-    private Pokemon pokemon1;
-    private Pokemon pokemon2;
-    private Pokemon pokemon3;
-    private Pokemon pokemon4;
-    private Pokemon pokemon5;
-    private Pokemon pokemon6;
+    String name;
+    Pokemon pokemon1;
+    Pokemon pokemon2;
+    Pokemon pokemon3;
+    Pokemon pokemon4;
+    Pokemon pokemon5;
+    Pokemon pokemon6;
+    Pokemon[] pokemon;
 
     public Trainer(String name, Pokemon pokemon1, Pokemon pokemon2, Pokemon pokemon3, Pokemon pokemon4, Pokemon pokemon5, Pokemon pokemon6)
     {
@@ -18,29 +19,34 @@ public class Trainer
         this.pokemon4 = pokemon4;
         this.pokemon5 = pokemon5;
         this.pokemon6 = pokemon6;
+        this.pokemon = new Pokemon[]{pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6};
     }
 
-    public void battle(Trainer otherTrainer)
-    {
-        System.out.print(this.name + " is battling " + otherTrainer.name);
-        Random rand = new Random();
-        double num = rand.nextDouble();
-        int order = 1; 
-        if(num < 0.5)
+   public boolean allPokemonDead()
+   {
+        for(int i = 0; i < 6; i++)
         {
-            order = 1;
+            if(this.pokemon[i].currentHP > 0)
+            {
+                return false;
+            } 
+            
         }
-        else
-        {
-            order = 0;
-        }
-    }
+        return true;
+   } 
     
+   public int turn()
+   {
+        Scanner console = new Scanner(System.in);    
+        System.out.print("1 - Switch | 2 - Attack | 3 - Use Item ");
+        int choice = console.nextInt();
+        return choice;
+   }
     public static void main(String[] args)
     {
         Trainer Trainer1 = new Trainer("Gary", null, null, null, null, null, null );
         Trainer Trainer2 = new Trainer("Bob", null, null, null, null, null, null );
-        Trainer1.battle(Trainer2);
+        
 
     }
 }

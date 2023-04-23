@@ -1,14 +1,16 @@
 public class Pokemon
   {
-    private String name;
-    private int level;
-    private String type;
-    private int maxHP;
-    private int currentHP;
-    private int attack;
-    private int defense;
+    String name;
+    int level;
+    String type;
+    int maxHP;
+    int currentHP;
+    int attack;
+    int defense;
+    int speed;
+    
 
-    public Pokemon(String name, int level, String type, int maxHP, int currentHP, int attack, int defense)
+    public Pokemon(String name, int level, String type, int maxHP, int currentHP, int attack, int defense, int speed)
     {
       this.name = name;
       this.level = level;
@@ -17,12 +19,13 @@ public class Pokemon
       this.currentHP = currentHP;
       this.attack = attack;
       this.defense = defense;
+      this.speed = speed;
     }
     public static void main(String[] args)
     {
       
       
-    Pokemon x = new Pokemon("Pikachu", 5, "Electric", 35, 35, 5, 5);
+    Pokemon x = new Pokemon("Pikachu", 5, "Electric", 35, 35, 5, 5, 50);
     
     String name = x.getName();
     System.out.println(name);

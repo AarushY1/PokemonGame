@@ -52,7 +52,8 @@ public class Attack
         Attack earthquake = new Attack("Earthquake", "Ground", 100, 100, "A mighty earthquake that strikes all Pokémon in battle, including the user.");
         Attack ice_beam = new Attack("Ice Beam", "Ice", 90, 100, "A cold beam of ice that may freeze the foe.");
         
-        Pokemon charizard = new Pokemon("Charizard", 120, "Fire", thunderbolt, earthquake, flamethrower, ice_beam);
+        //Pokemon charizard = new Pokemon("Charizard", 120, "Fire", thunderbolt, earthquake, flamethrower, ice_beam);
+        System.out.println(thunderbolt);
         
     }
 }
