@@ -1,10 +1,10 @@
 public class Attack 
 {
-    private String name;
-    private String type;
-    private int power;
-    private int accuracy;
-    private String description;
+    String name;
+    String type;
+    int power;
+    int accuracy;
+    String description;
 
     public Attack(String name, String type, int power, int accuracy, String description) 
     {
@@ -13,31 +13,6 @@ public class Attack
         this.power = power;
         this.accuracy = accuracy;
         this.description = description;
-    }
-
-    public String getName() 
-    {
-        return name;
-    }
-
-    public String getType() 
-    {
-        return type;
-    }
-
-    public int getPower() 
-    {
-        return power;
-    }
-
-    public int getAccuracy() 
-    {
-        return accuracy;
-    }
-
-    public String getDescription() 
-    {
-        return description;
     }
 
     public String toString() 
