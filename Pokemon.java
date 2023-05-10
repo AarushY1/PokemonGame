@@ -43,11 +43,4 @@ public class Pokemon
       System.out.print("Test");   
     }
 
-    
   }
-  //HW
-  /*
-   * Add attributes
-   * getters and setters
-   * 
-   */

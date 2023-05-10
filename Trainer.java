@@ -36,14 +36,19 @@ public class Trainer
         }
         return true;
    } 
-    
-   public int turn()
+
+   public int turn() 
    {
-        Scanner console = new Scanner(System.in);    
-        System.out.print("1 - Switch | 2 - Attack | 3 - Use Item ");
-        int choice = console.nextInt();
+        Scanner console = new Scanner(System.in);
+        int choice;
+        do 
+        {
+            System.out.print("1 - Switch | 2 - Attack | 3 - Use Item: ");
+            choice = console.nextInt();
+        } 
+        while (choice < 1 || choice > 3);
         return choice;
-   }
+    }
 
    public void switchPokemon()
    {
