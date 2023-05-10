@@ -76,11 +76,26 @@ public class Battle
            if(trainer2Choice > trainer1Choice)
            {
                 ; // trainer 2 goes first
+                if(!trainer2.currentPokemon.allPokemonDead())
+                {
+                    trainer2.attack(trainer1.currentPokemon);
+                }
+                if(!trainer1.currentPokemon.allPokemonDead())
+                {
+                    trainer1.attack(trainer2.currentPokemon);
+                }
            }
            else
            {
                 ; // trainer 1 goes first
-           }
+                if(!trainer1.currentPokemon.allPokemonDead())
+                {
+                    trainer1.attack(trainer2.currentPokemon);
+                }
+                if(!trainer2.currentPokemon.allPokemonDead())
+                {
+                    trainer2.attack(trainer1.currentPokemon);
+                }
         }
     }
 
