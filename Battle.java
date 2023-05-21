@@ -38,33 +38,7 @@ public class Battle
                 this.trainer1 = trainer2;
             }
         }
-        int trainer1Turn = trainer1.turn();
-        int trainer2Turn = trainer2.turn();
-            
-        if(trainer1Turn == 1)
-        {
-            trainer1.switchPokemon();;//switch
-        }
-        if(trainer2Turn == 1)
-        {
-            trainer2.switchPokemon();;//switch
-        }
-        if(trainer1Turn == 2)
-        {
-            trainer1.attack(trainer2.currentPokemon);//attack
-        }
-        else if(trainer1Turn == 3)
-        {
-            trainer1.useItem();//useitem
-        }
-        if(trainer2Turn == 2)
-        {
-            trainer2.attack(trainer1.currentPokemon);//attack
-        }
-        else if(trainer2Turn == 3)
-        {
-            trainer2.useItem();//useitem
-        }
+        
     }
 
     public void playGame()
@@ -75,27 +49,71 @@ public class Battle
            int trainer2Choice = trainer2.turn();
            if(trainer2Choice > trainer1Choice)
            {
-                ; // trainer 2 goes first
-                if(!trainer2.currentPokemon.allPokemonDead())
+                // trainer 2 goes first
+                if(!trainer2.allPokemonDead())
                 {
-                    trainer2.attack(trainer1.currentPokemon);
+                    switch(trainer2Choice)
+                    {
+                        case 1: trainer2.switchPokemon();
+                            break;
+                        case 2: trainer2.attack(trainer1);;
+                            break;
+                        case 3: trainer2.useItem();
+                            break;
+                    }
                 }
-                if(!trainer1.currentPokemon.allPokemonDead())
+                if(!trainer1.allPokemonDead())
                 {
-                    trainer1.attack(trainer2.currentPokemon);
+                    switch(trainer1Choice)
+                    {
+                        case 1: trainer1.switchPokemon();
+                            break;
+                        case 2: trainer1.attack(trainer2);;
+                            break;
+                        case 3: trainer1.useItem();
+                            break;
+                    }
                 }
            }
            else
            {
-                ; // trainer 1 goes first
-                if(!trainer1.currentPokemon.allPokemonDead())
+
+
+                // trainer 1 goes first
+                if(!trainer1.allPokemonDead())
                 {
-                    trainer1.attack(trainer2.currentPokemon);
+
+                    switch(trainer1Choice)
+                    {
+                        case 1: trainer1.switchPokemon();
+                            break;
+                        case 2: trainer1.attack(trainer2);;
+                            break;
+                        case 3: trainer1.useItem();
+                            break;
+                    }
                 }
-                if(!trainer2.currentPokemon.allPokemonDead())
+                if(!trainer2.allPokemonDead())
                 {
-                    trainer2.attack(trainer1.currentPokemon);
+                    switch(trainer2Choice)
+                    {
+                        case 1: trainer2.switchPokemon();
+                            break;
+                        case 2: trainer2.attack(trainer1);;
+                            break;
+                        case 3: trainer2.useItem();
+                            break;
+                    }
                 }
+            }
+        }
+        if(trainer1.allPokemonDead())
+        {
+            System.out.println(trainer2.name + " Wins!");
+        }
+        else
+        {
+            System.out.println(trainer1.name + " Wins!");
         }
     }
 
@@ -137,6 +155,9 @@ public class Battle
 
         Trainer Gary = new Trainer("Gary", charizard, typhlosion, lapras, jolteon, gyarados, scizor);
         Trainer Bob = new Trainer("Bob", alakazam, dragonite, machamp, starmie, blastoise, gengar);
+
+        Battle b = new Battle(Gary, Bob);
+        b.playGame();
         
     }
 }

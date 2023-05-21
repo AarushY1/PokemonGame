@@ -43,7 +43,7 @@ public class Trainer
         int choice;
         do 
         {
-            System.out.print("1 - Switch | 2 - Attack | 3 - Use Item: ");
+            System.out.print(this.name + " 1 - Switch | 2 - Attack | 3 - Use Item: ");
             choice = console.nextInt();
         } 
         while (choice < 1 || choice > 3);
@@ -52,8 +52,17 @@ public class Trainer
 
    public void switchPokemon()
    {
+        Pokemon[] allPokemon = new Pokemon[]{this.pokemon1, this.pokemon2, this.pokemon3, this.pokemon4, this.pokemon5, this.pokemon6};
         Scanner console = new Scanner(System.in);    
-        System.out.print("Enter a number for which pokemon \n Pokemon 1: " + this.pokemon1.name + "\n Pokemon 2: " + this.pokemon2.name + "\n Pokemon 3: " + this.pokemon3.name + "\n Pokemon 4: " + this.pokemon4.name + "\n Pokemon 5: " + this.pokemon5.name + "\n Pokemon 6: " + this.pokemon6.name);
+        System.out.println("Enter a number for which pokemon");
+        for(int i = 0; i < 6; i++)
+        {
+            if(allPokemon[i].currentHP > 0)
+            {
+               System.out.println("Pokemon " + (i+1) + " is " + this.pokemon[i].name); 
+            }
+        }
+        //System.out.print("Enter a number for which pokemon \n Pokemon 1: " + this.pokemon1.name + "\n Pokemon 2: " + this.pokemon2.name + "\n Pokemon 3: " + this.pokemon3.name + "\n Pokemon 4: " + this.pokemon4.name + "\n Pokemon 5: " + this.pokemon5.name + "\n Pokemon 6: " + this.pokemon6.name);
         int numPokemon = console.nextInt();
         switch(numPokemon)
         {
@@ -69,14 +78,14 @@ public class Trainer
                 break;  
             case 6: currentPokemon = pokemon6;
                 break;
-            default: System.out.print("Invalid Number");
+            default: System.out.println("Invalid Number");
             
         }
    }
    public void attack(Trainer otherTrainer)
    {
     Scanner console = new Scanner(System.in);
-    System.out.print("Enter a number for which pokemon's move \n Move 1: " + this.currentPokemon.move1.name + "\n Move 2: " + this.currentPokemon.move2.name + "\n Move 3: " + this.currentPokemon.move3.name + "\n Move 4: " + this.currentPokemon.move4.name);
+    System.out.println("Enter a number for " + this.currentPokemon.name + " move \n Move 1: " + this.currentPokemon.move1.name + "\n Move 2: " + this.currentPokemon.move2.name + "\n Move 3: " + this.currentPokemon.move3.name + "\n Move 4: " + this.currentPokemon.move4.name);
     int moveNumber = console.nextInt();
 
     Attack currentMove = null;
@@ -93,11 +102,23 @@ public class Trainer
             default: System.out.print("Invalid Number");
         }
         otherTrainer.currentPokemon.currentHP -= this.currentPokemon.attack(currentMove);
+        System.out.println( this.currentPokemon.name + " used " + currentMove.name + " on " + otherTrainer.currentPokemon.name);
+        
         if(otherTrainer.currentPokemon.currentHP <= 0)
         {
             otherTrainer.currentPokemon.currentHP = 0;
-            otherTrainer.switchPokemon();
+            System.out.println(otherTrainer.currentPokemon.name + " has fainted!");
+            if(!otherTrainer.allPokemonDead())
+            {
+                otherTrainer.switchPokemon();
+            }
         }
+        System.out.println(otherTrainer.currentPokemon.name + " now has " + otherTrainer.currentPokemon.currentHP + " HPs left");
+    }
+
+    public void useItem()
+    {
+        ;
     }
     
     public static void main(String[] args)
