@@ -137,7 +137,7 @@ public class Battle
         Attack swords_dance = new Attack("Swords Dance", "Normal", 0, 0, "Sharply raises the user's Attack stat.");
         Attack roost = new Attack("Roost", "Flying", 0, 0, "Restores the user's HP by half of its max HP while landing on the ground.");
         
-        Pokemon charizard = new Pokemon("Charizard", 30, "Fire", 150, 150, 100, 90, 70, thunderbolt, earthquake, flamethrower, ice_beam);
+        Pokemon charizard = new Pokemon("Charizard", 30, "Fire", 150, 150, 100, 90, 80, thunderbolt, earthquake, flamethrower, ice_beam);
         Pokemon machamp = new Pokemon("Machamp", 30, "Fighting", 130, 130, 120, 100, 60, thunder, earthquake, ice_punch, fire_blast); 
         Pokemon alakazam = new Pokemon("Alakazam", 30, "Psychic", 120, 120, 95, 80, 70, psychic, shadow_ball, hydro_pump, solar_beam);
         Pokemon gyarados = new Pokemon("Gyarados", 30, "Water", 170, 170, 100, 50, 50, thunderbolt, hydro_pump, ice_beam, earthquake);
@@ -147,14 +147,27 @@ public class Battle
         Pokemon jolteon = new Pokemon("Jolteon", 35, "Electric", 110, 110, 80, 75, 150, thunderbolt, shadow_ball, ice_beam, thunder);
         Pokemon starmie = new Pokemon("Starmie", 50, "Water", 150, 150, 95, 105, 120, thunderbolt, ice_beam, psychic, hydro_pump);
         Pokemon blastoise = new Pokemon("Blastoise", 55, "Water", 170, 170, 95, 120, 93, hydro_pump, ice_beam, earthquake, psychic);
-        Pokemon gengar = new Pokemon("Gengar", 35, "Ghost/Poison", 130, 130, 80, 60, 110, shadow_ball, sludge_bomb, thunderbolt, hypnosis);
-        Pokemon scizor = new Pokemon("Scizor", 45, "Bug/Steel", 180, 180, 120, 100, 70, x_scissor, bullet_punch, swords_dance, roost);
+        Pokemon gengar = new Pokemon("Gengar", 35, "Ghost", 130, 130, 80, 60, 110, shadow_ball, sludge_bomb, thunderbolt, hypnosis);
+        Pokemon scizor = new Pokemon("Scizor", 45, "Bug", 180, 180, 120, 100, 70, x_scissor, bullet_punch, swords_dance, roost);
 
-
+        //JavaFX - graphics library
         //String name, int level, String type, int maxHP, int currentHP, int attack, int defense, int speed, Attack move1, Attack move2, Attack move3, Attack move4
+        Item potion = new Item("Health Potion", 5);
+        Item revive = new Item("Revive", 3);
+        Item maxPotion = new Item("Max Health Potion", 10);
+        
+        ArrayList<Item> items1 = new ArrayList<Item>();
+        items1.add(potion);
+        items1.add(revive);
+        items1.add(maxPotion);
 
-        Trainer Gary = new Trainer("Gary", charizard, typhlosion, lapras, jolteon, gyarados, scizor);
-        Trainer Bob = new Trainer("Bob", alakazam, dragonite, machamp, starmie, blastoise, gengar);
+        ArrayList<Item> items2 = new ArrayList<Item>();
+        items2.add(potion);
+        items2.add(revive);
+        items2.add(maxPotion);
+
+        Trainer Gary = new Trainer("Gary", charizard, typhlosion, lapras, jolteon, gyarados, scizor, items1);
+        Trainer Bob = new Trainer("Bob", alakazam, dragonite, machamp, starmie, blastoise, gengar, items2);
 
         Battle b = new Battle(Gary, Bob);
         b.playGame();

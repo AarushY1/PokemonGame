@@ -10,8 +10,9 @@ public class Trainer
     Pokemon pokemon6;
     Pokemon[] pokemon;
     Pokemon currentPokemon;
+    ArrayList<Item> items;
 
-    public Trainer(String name, Pokemon pokemon1, Pokemon pokemon2, Pokemon pokemon3, Pokemon pokemon4, Pokemon pokemon5, Pokemon pokemon6)
+    public Trainer(String name, Pokemon pokemon1, Pokemon pokemon2, Pokemon pokemon3, Pokemon pokemon4, Pokemon pokemon5, Pokemon pokemon6, ArrayList<Item> items)
     {
         this.name = name;
         this.pokemon1 = pokemon1;
@@ -22,6 +23,7 @@ public class Trainer
         this.pokemon6 = pokemon6;
         this.pokemon = new Pokemon[]{pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6};
         this.currentPokemon = pokemon1;
+        this.items = items;
     }
 
    public boolean allPokemonDead()
@@ -62,7 +64,7 @@ public class Trainer
                System.out.println("Pokemon " + (i+1) + " is " + this.pokemon[i].name); 
             }
         }
-        //System.out.print("Enter a number for which pokemon \n Pokemon 1: " + this.pokemon1.name + "\n Pokemon 2: " + this.pokemon2.name + "\n Pokemon 3: " + this.pokemon3.name + "\n Pokemon 4: " + this.pokemon4.name + "\n Pokemon 5: " + this.pokemon5.name + "\n Pokemon 6: " + this.pokemon6.name);
+        
         int numPokemon = console.nextInt();
         switch(numPokemon)
         {
@@ -85,7 +87,7 @@ public class Trainer
    public void attack(Trainer otherTrainer)
    {
     Scanner console = new Scanner(System.in);
-    System.out.println("Enter a number for " + this.currentPokemon.name + " move \n Move 1: " + this.currentPokemon.move1.name + "\n Move 2: " + this.currentPokemon.move2.name + "\n Move 3: " + this.currentPokemon.move3.name + "\n Move 4: " + this.currentPokemon.move4.name);
+    System.out.println("Enter a number for " + this.currentPokemon.name + " move \n Move 1: " + this.currentPokemon.move1.name + " - " + this.currentPokemon.move1.power + "\n Move 2: " + this.currentPokemon.move2.name + " - " + this.currentPokemon.move2.power + "\n Move 3: " + this.currentPokemon.move3.name + " - " + this.currentPokemon.move3.power + "\n Move 4: " + this.currentPokemon.move4.name + " - " + this.currentPokemon.move4.power);
     int moveNumber = console.nextInt();
 
     Attack currentMove = null;
@@ -101,9 +103,14 @@ public class Trainer
                 break;
             default: System.out.print("Invalid Number");
         }
-        otherTrainer.currentPokemon.currentHP -= this.currentPokemon.attack(currentMove);
+        double m = multiplier(this.currentPokemon, otherTrainer.currentPokemon, currentMove);
+        System.out.println();
+        //System.out.println(m);
+        double damage = m * (this.currentPokemon.attack / otherTrainer.currentPokemon.defense) * this.currentPokemon.attack(currentMove) + 2;
+        //System.out.println(damage); 
+        otherTrainer.currentPokemon.currentHP -= (int)damage;
         System.out.println( this.currentPokemon.name + " used " + currentMove.name + " on " + otherTrainer.currentPokemon.name);
-        
+         
         if(otherTrainer.currentPokemon.currentHP <= 0)
         {
             otherTrainer.currentPokemon.currentHP = 0;
@@ -118,21 +125,136 @@ public class Trainer
 
     public void useItem()
     {
-        ;
+        
+        Scanner console = new Scanner(System.in);
+        System.out.println("Enter the number of the item you want to use:");
+        int index = 1;
+        for (Item item : this.items) {
+            System.out.println("Item " + index + ": " + item.getName());
+            index++;
+        }
+        int itemNumber = console.nextInt();
+        Item chosenItem = this.items.get(itemNumber -1);
+        this.currentPokemon.currentHP += chosenItem.getQuantity();
+
+        if(this.currentPokemon.currentHP >= this.currentPokemon.maxHP)
+        {
+            this.currentPokemon.currentHP = this.currentPokemon.maxHP;
+        }
+        System.out.println("Trainer " + this.name + " used " + chosenItem.getName() + " : " + this.currentPokemon.name + " " + this.currentPokemon.currentHP);
+
+        this.items.remove(itemNumber-1);
+        
     }
     
+    public static double multiplier(Pokemon p1, Pokemon p2, Attack aMove)
+    {
+        //When adding different types copy the array and the .put
+        double m = 1;
+        String p1Type = p1.type;
+        String p2Type = p2.type;
+        HashMap<String, String[]> superEffective = new HashMap<String, String[]>();
+        String[] fire = {"Grass", "Bug", "Steel"};
+        superEffective.put("Fire", fire);
+        String[] water = {"Ground", "Rock", "Fire"};
+        superEffective.put("Water", water);
+        String[] dragon = {"Dragon"};
+        superEffective.put("dragon", dragon);
+        String[] ice = {"Flying", "Ground", "Grass", "Dragon"};
+        superEffective.put("Ice", ice);
+        String[] fairy = {"Fighting", "Dragon", "Dark"};
+        superEffective.put("Fairy", fairy);
+        String[] dark = {"Ghost", "Psychic"};
+        superEffective.put("Dark", dark);
+        String[] psychic = {"Fighting", "Poison"};
+        superEffective.put("Psychic", psychic);
+        String[] electric = {"Flying", "Water"};
+        superEffective.put("Electric", electric);
+        String[] grass = {"Ground", "Rock", "Water"};
+        superEffective.put("Grass", grass);
+        String[] steel = {"Rock", "Ice", "Fairy"};
+        superEffective.put("Steel", steel);
+        String[] ghost = {"Ghost", "Psychic"};
+        superEffective.put("Ghost", ghost);
+        String[] bug = {"Grass", "Psychic", "Dark"};
+        superEffective.put("Bug", bug);
+        String[] rock = {"Flying", "Bug", "Fire", "Ice"};
+        superEffective.put("Rock", rock);
+        String[] ground = {"Poison", "Rock", "Steel", "Fire", "Electric"};
+        superEffective.put("Ground", ground);
+        String[] poison = {"Grass", "Fairy"};
+        superEffective.put("Poison", poison);
+        String[] flying = {"Fighting", "Bug", "Grass"};
+        superEffective.put("Flying", flying);
+        String[] fighting = {"Normal", "Rock", "Steel", "Ice", "Dark"};
+        superEffective.put("Fighting", fighting);
+        for(String t: superEffective.get(p1Type))
+        {
+            if(p2Type == t)
+            {
+                m *= 2;
+            }
+        }
+        
+
+        HashMap<String, String[]> uneffective = new HashMap<String, String[]>();
+        String[] fire1 = {"Rock", "Water", "Fire", "Dragon"};
+        uneffective.put("Fire", fire1);
+        String[] water1 = {"Water", "Grass", "Dragon"};
+        uneffective.put("Water", water1);
+        String[] dragon1 = {"Steel", "Fairy"};
+        uneffective.put("dragon", dragon1);
+        String[] ice1 = {"Steel", "Fire", "Water", "Ice"};
+        uneffective.put("Ice", ice1);
+        String[] fairy1 = {"Poison", "Steel", "Fire"};
+        uneffective.put("Fairy", fairy1);
+        String[] dark1 = {"Fighting", "Dark", "Fairy"};
+        uneffective.put("Dark", dark1);
+        String[] psychic1 = {"Steel", "Psychic", "Dark"};
+        uneffective.put("Psychic", psychic1);
+        String[] electric1 = {"Ground", "Grass", "Electric", "Dragon"};
+        uneffective.put("Electric", electric1);
+        String[] grass1 = {"Flying", "Poison", "Bug", "Steel", "Fire", "Grass", "Dragon"};
+        uneffective.put("Grass", grass1);
+        String[] steel1 = {"Steel", "Fire", "Water", "Electric"};
+        uneffective.put("Steel", steel1);
+        String[] ghost1 = {"Normal", "Dark"};
+        uneffective.put("Ghost", ghost1);
+        String[] bug1 = {"Fighting", "Flying", "Poison", "Ghost", "Steel", "Fire", "Fairy"};
+        uneffective.put("Bug", bug1);
+        String[] rock1 = {"Fighting", "Ground", "Steel"};
+        uneffective.put("Rock", rock1);
+        String[] ground1 = {"Flying", "Ground", "Steel"};
+        uneffective.put("Ground", ground1);
+        String[] poison1 = {"Poison", "Ground", "Rock", "Ghost", "Steel"};
+        uneffective.put("Poison", poison1);
+        String[] flying1 = {"Rock", "Steel", "Electric"};
+        uneffective.put("Flying", flying1);
+        String[] fighting1 = {"Flying", "Poison", "Psychic", "Bug", "Ghost", "Fairy"};
+        uneffective.put("Fighting", fighting1);
+        for(String t: uneffective.get(p1Type))
+        {
+            if(p2Type == t)
+            {
+                m *= 0.5;
+            }
+        }
+
+        if(p1Type == aMove.type)
+        {
+            m *= 1.5;
+        }
+        return m;
+    }
     public static void main(String[] args)
     {
-        Trainer Trainer1 = new Trainer("Gary", null, null, null, null, null, null );
-        Trainer Trainer2 = new Trainer("Bob", null, null, null, null, null, null );
+        Trainer Trainer1 = new Trainer("Gary", null, null, null, null, null, null, null );
+        Trainer Trainer2 = new Trainer("Bob", null, null, null, null, null, null, null );
         
         Trainer1.switchPokemon();
     }
 }
 
-/*HW 4/30/2023
- * in turn method, don't break if not typed 1,2,3
- * also for switch method(ask again if not typed 1-6)
- * Add pokemon trainers to test out
- * In the battle method make 2 trainers pokemon that have real moves
+/*HW 5/28/2023
+ *  add other types to make supereffective and uneffective
  */
